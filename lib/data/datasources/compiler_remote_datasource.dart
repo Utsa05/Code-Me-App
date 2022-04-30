@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:code_me/data/core/api_client.dart';
 import 'package:code_me/data/models/compile_output_model.dart';
 import 'package:code_me/data/models/compile_request_model.dart';

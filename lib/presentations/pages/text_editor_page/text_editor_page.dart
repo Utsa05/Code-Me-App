@@ -90,40 +90,42 @@ class _TextEditorPageState extends State<TextEditorPage> {
   }
 
   void changeLanguageSource(String language) {
-    if (language == "C++") {
-      languageSource = cpp;
-      source =
-          '//c++ programme\n\n #include<bits/stdc++.h>\nusing namespace std;\n\n//your main function\nint main()\n{\ncout <<"Hello World!";	\n\nreturn 0;\n}\n';
-    } else if (language == 'Python') {
-      languageSource = python;
-      source = '//Python Programme\n\n print("Hello World!")';
-    } else if (language == 'Python 3') {
-      languageSource = python;
-      source = '//Python 3 Programme\n\n print("Hello World!")';
-    } else if (language == 'Java') {
-      languageSource = java;
-      source =
-          '//Java Programme\n\n class Java\n{\n public static void main(string[] args){\n\nSystem.out.println("Hello World!")\n\n}\n}';
-    } else if (language == 'PHP') {
-      languageSource = php;
-      source = '//PHP Programme\n\n<?php\n\necho "Hello World!"\n\n?>';
-    } else if (language == 'Perl') {
-      languageSource = perl;
-      source =
-          '//Perl Programme\n\n#!/usr/bin/perl\n\n# Modules used\nuse strict;\nuse warnings;\n\nprint("Hello World\n");';
-    } else if (language == 'Scala') {
-      languageSource = scala;
-      source =
-          '//Scala Programme\n\nobject Geeks\n{\n// Main Method \ndef main(args: Array[String]) \n{\n println("Hello World!")\n}\n}';
+    if (widget.languageItemEntity.id != 100) {
+      if (language == "C++") {
+        languageSource = cpp;
+        source =
+            '//c++ programme\n\n #include<bits/stdc++.h>\nusing namespace std;\n\n//your main function\nint main()\n{\ncout <<"Hello World!";	\n\nreturn 0;\n}\n';
+      } else if (language == 'Python') {
+        languageSource = python;
+        source = '//Python Programme\n\n print("Hello World!")';
+      } else if (language == 'Python 3') {
+        languageSource = python;
+        source = '//Python 3 Programme\n\n print("Hello World!")';
+      } else if (language == 'Java') {
+        languageSource = java;
+        source =
+            '//Java Programme\n\n class Java\n{\n public static void main(string[] args){\n\nSystem.out.println("Hello World!")\n\n}\n}';
+      } else if (language == 'PHP') {
+        languageSource = php;
+        source = '//PHP Programme\n\n<?php\n\necho "Hello World!"\n\n?>';
+      } else if (language == 'Perl') {
+        languageSource = perl;
+        source =
+            '//Perl Programme\n\n#!/usr/bin/perl\n\n# Modules used\nuse strict;\nuse warnings;\n\nprint("Hello World\n");';
+      } else if (language == 'Scala') {
+        languageSource = scala;
+        source =
+            '//Scala Programme\n\nobject Geeks\n{\n// Main Method \ndef main(args: Array[String]) \n{\n println("Hello World!")\n}\n}';
+      }
+
+      _codeController = CodeController(
+        text: source,
+        language: languageSource,
+        theme: themesource,
+      );
+
+      setState(() {});
     }
-
-    _codeController = CodeController(
-      text: source,
-      language: languageSource,
-      theme: themesource,
-    );
-
-    setState(() {});
   }
 
   void changeThemeSource(String theme) {
@@ -136,12 +138,32 @@ class _TextEditorPageState extends State<TextEditorPage> {
     } else {
       themesource = defaultTheme;
     }
+    if (widget.languageItemEntity.id == 0) {
+      _codeController = CodeController(
+          text: source, language: languageSource, theme: themesource);
+    } else if (widget.languageItemEntity.id == 100) {
+      if (widget.languageItemEntity.language == 'Python') {
+        favLanguage = python;
+      } else if (widget.languageItemEntity.language == 'Java') {
+        favLanguage = java;
+      } else if (widget.languageItemEntity.language == 'Perl') {
+        favLanguage = perl;
+      } else if (widget.languageItemEntity.language == 'Php') {
+        favLanguage = php;
+      } else if (widget.languageItemEntity.language == 'C++') {
+        favLanguage = cpp;
+      } else if (widget.languageItemEntity.language == 'Scala') {
+        favLanguage = scala;
+      } else if (widget.languageItemEntity.language == 'Phthon 3') {
+        favLanguage = python;
+      }
 
-    _codeController = CodeController(
-      text: source,
-      language: dart,
-      theme: themesource,
-    );
+      _codeController = CodeController(
+        text: widget.languageItemEntity.code,
+        language: favLanguage,
+        theme: themesource,
+      );
+    }
 
     setState(() {});
   }
