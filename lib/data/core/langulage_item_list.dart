@@ -47,11 +47,12 @@ class LanguageItemList {
           language: "Perl",
           type: 'perl'),
       const LanguageItemEntity(
-          id: 8,
-          title: 'Scala',
-          imageAssets: 'assets/icons/cpp.png',
-          language: "Scala",
-          type: 'scala'),
+        id: 8,
+        title: 'Scala',
+        imageAssets: 'assets/icons/cpp.png',
+        language: "Scala",
+        type: 'scala',
+      ),
     ];
 
     return list;

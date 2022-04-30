@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:code_me/common/constants/size_constants.dart';
+import 'package:code_me/data/core/api_client.dart';
+import 'package:code_me/data/datasources/compiler_remote_datasource.dart';
+import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'package:highlight/languages/dart.dart';
 
 class RunCodePage extends StatefulWidget {
   const RunCodePage({Key? key}) : super(key: key);
@@ -79,8 +86,30 @@ class _RunCodePageState extends State<RunCodePage> {
                         height: 55.0,
                         elevaiton: 0.0,
                         color: ColorTheme.blueColor.withOpacity(0.2),
-                        tap: () {
-                          outputBottomsheetMethod(context);
+                        tap: () async {
+                          CompileRequestModel model = CompileRequestModel(
+                              language: 'c',
+                              code: 'print("Hello World!")',
+                              input: '',
+                              save: false);
+                          ApiClient apiClient = ApiClient(Client());
+                          CompileRemoteDataSource dataSource =
+                              CompileRemoteDatasourceImpl(apiClient);
+                          var response = await dataSource.requestCompile(model);
+
+                          print(response.status);
+
+                          Timer(Duration(seconds: 2), () async {
+                            if (response.status == 'success') {
+                              var output = await dataSource
+                                  .getOutput(response.submissionId);
+                              print(output.output);
+                              print(output.memory);
+                              print(output.time);
+                            }
+                          });
+
+                          //outputBottomsheetMethod(context);
                         },
                         child: const Icon(
                           Icons.play_arrow_outlined,

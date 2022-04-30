@@ -13,7 +13,7 @@ String compileOutputModelToJson(CompileOutputModel data) =>
 class CompileOutputModel {
   CompileOutputModel({
     this.status,
-    this.timestamp,
+    // this.timestamp,
     this.compResult,
     this.memory,
     this.time,
@@ -29,7 +29,7 @@ class CompileOutputModel {
   });
 
   String? status;
-  DateTime? timestamp;
+  // DateTime? timestamp;
   String? compResult;
   String? memory;
   String? time;
@@ -46,7 +46,7 @@ class CompileOutputModel {
   factory CompileOutputModel.fromJson(Map<String, dynamic> json) =>
       CompileOutputModel(
         status: json["status"],
-        timestamp: DateTime.parse(json["timestamp"]),
+        // timestamp: DateTime.parse(json["timestamp"])??DateTime.n,
         compResult: json["compResult"],
         memory: json["memory"],
         time: json["time"],
@@ -63,7 +63,7 @@ class CompileOutputModel {
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "timestamp": timestamp!.toIso8601String(),
+        //"timestamp": timestamp!.toIso8601String(),
         "compResult": compResult,
         "memory": memory,
         "time": time,

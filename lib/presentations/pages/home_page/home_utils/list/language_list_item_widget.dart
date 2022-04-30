@@ -1,4 +1,5 @@
 import 'package:code_me/common/constants/pm_constants.dart';
+import 'package:code_me/common/constants/route_constants.dart';
 import 'package:code_me/common/constants/size_constants.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
@@ -15,13 +16,23 @@ class LanguageListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageItemEntity languageItemEntity = const LanguageItemEntity(
+        imageAssets: 'noasset',
+        id: 100,
+        language: 'Java',
+        title: 'Java Problem',
+        type: 'java',
+        code: '\\Java Programme\n System.out.println("Hello World!")');
     return Container(
       margin: const EdgeInsets.only(bottom: 10.0),
       child: ListTile(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(PMCons.min)),
         tileColor: ColorTheme.sceandaryColor,
-        onTap: (() {}),
+        onTap: (() {
+          Navigator.pushNamed(context, RouteCons.texteditorRoue,
+              arguments: languageItemEntity);
+        }),
         title: TextWidget(
           title: item.title,
         ),

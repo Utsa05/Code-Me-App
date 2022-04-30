@@ -31,10 +31,7 @@ class HomePage extends StatelessWidget {
         actions: [
           CircleBbttonWidget(
               color: ColorTheme.blueColor,
-              child: const Icon(
-                EvaIcons.searchOutline,
-                size: Sizes.dimen_24 + 5.0,
-              ),
+              child: Image.asset('assets/icons/codemeblueicon.png'),
               tap: () {}),
         ],
       ),

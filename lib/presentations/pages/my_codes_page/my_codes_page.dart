@@ -1,7 +1,6 @@
 import 'package:code_me/common/constants/pm_constants.dart';
 import 'package:code_me/common/constants/size_constants.dart';
 import 'package:code_me/presentations/pages/my_codes_page/mycode_util/my_codes_body.dart';
-import 'package:code_me/presentations/pages/search_page/search_utils/search_body.dart';
 import 'package:code_me/presentations/pages/search_page/search_utils/search_widget.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';

@@ -1,4 +1,5 @@
 import 'package:code_me/data/models/nav_item_model.dart';
+import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/pages/home_page/home_page.dart';
 import 'package:code_me/presentations/pages/my_codes_page/my_codes_page.dart';
 import 'package:code_me/presentations/pages/text_editor_page/text_editor_page.dart';
@@ -15,7 +16,19 @@ class BottomNavPage extends StatefulWidget {
 
 class _BottomNavPageState extends State<BottomNavPage> {
   int selectBtn = 1;
-  var pages = [const HomePage(), const TextEditorPage(), const MyCodesPage()];
+  var pages = [
+    const HomePage(),
+    const TextEditorPage(
+      isDirect: true,
+      languageItemEntity: LanguageItemEntity(
+          id: 0,
+          title: "title",
+          imageAssets: "imageAssets",
+          language: "language",
+          type: "type"),
+    ),
+    const MyCodesPage()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

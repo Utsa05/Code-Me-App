@@ -1,5 +1,6 @@
+import 'package:code_me/common/app_routes.dart';
+import 'package:code_me/common/constants/route_constants.dart';
 import 'package:code_me/common/screenutil/screenutil.dart';
-import 'package:code_me/presentations/pages/bottom_nav_page/bottom_nav_page.dart';
 
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,8 @@ class CodeMeApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: ColorTheme.redColor),
       ),
-      home: const BottomNavPage(),
+      initialRoute: RouteCons.initial,
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
