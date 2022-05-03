@@ -6,4 +6,5 @@ class RouteCons {
   static const String texteditorRoue = '/text-editor';
   static const String favcodeRoue = '/fav-codes';
   static const String bottomnavRoute = '/bottom-navi';
+  static const String complileRoute = '/compile-code';
 }

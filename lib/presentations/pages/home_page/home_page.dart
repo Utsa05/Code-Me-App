@@ -6,7 +6,6 @@ import 'package:code_me/presentations/pages/home_page/home_utils/home_body.dart'
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

@@ -3,15 +3,21 @@
 import 'dart:async';
 
 import 'package:code_me/common/constants/size_constants.dart';
+import 'package:code_me/data/models/compile_output_model.dart';
+import 'package:code_me/data/models/compile_request_model.dart';
+import 'package:code_me/data/models/compile_response_model.dart';
+import 'package:code_me/presentations/cubits/CompileRequestCubit/compilerequest_cubit.dart';
 
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RunCodePage extends StatefulWidget {
-  const RunCodePage({Key? key}) : super(key: key);
+  const RunCodePage({Key? key, required this.compileModel}) : super(key: key);
+  final CompileRequestModel compileModel;
 
   @override
   State<RunCodePage> createState() => _RunCodePageState();
@@ -19,6 +25,28 @@ class RunCodePage extends StatefulWidget {
 
 class _RunCodePageState extends State<RunCodePage> {
   final TextEditingController inputController = TextEditingController();
+  late String code, language, input;
+
+  @override
+  void initState() {
+    super.initState();
+    setCompilerInfo();
+
+    print(language);
+    //print(input??"uu");
+  }
+
+  void setCompilerInfo() {
+    setState(() {
+      code = widget.compileModel.code;
+      language = widget.compileModel.language;
+    });
+  }
+
+  bool isLoading = false;
+
+  late CompileResponseModel response;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,17 +107,63 @@ class _RunCodePageState extends State<RunCodePage> {
                           color: ColorTheme.whiteColor.withOpacity(0.6),
                         )),
                     ButtonWidget(
-                        radius: 100,
+                        radius: 200.0,
                         width: 35.0,
                         height: 55.0,
                         elevaiton: 0.0,
                         color: ColorTheme.blueColor.withOpacity(0.2),
                         tap: () async {
-                          outputBottomsheetMethod(context);
+                          var model = CompileRequestModel(
+                              language: language,
+                              code: code,
+                              input: inputController.text,
+                              save: true);
+
+                          if (model.language.isEmpty || model.code.isEmpty) {
+                            print('field cannot be empty');
+                          } else {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            BlocProvider.of<CompilerequestCubit>(context,
+                                    listen: false)
+                                .initiateCompileRequest(model);
+
+                            // outputBottomsheetMethod(context, response);
+
+                          }
+                          //
                         },
-                        child: const Icon(
-                          Icons.play_arrow_outlined,
-                          color: ColorTheme.blueColor,
+                        child: BlocListener<CompilerequestCubit,
+                            CompilerequestState>(
+                          listener: (context, state) {
+                            if (state is CompilerequestLoading) {
+                              setState(() {
+                                isLoading = true;
+                              });
+                            } else if (state is OutputResponseStage) {
+                              setState(() {
+                                isLoading = false;
+                              });
+
+                              Timer(const Duration(seconds: 1), () {
+                                outputBottomsheetMethod(
+                                    context, state.compileOutputModel);
+                              });
+                            }
+                          },
+                          child: isLoading == false
+                              ? const Icon(
+                                  Icons.play_arrow_outlined,
+                                  color: ColorTheme.blueColor,
+                                )
+                              : const SizedBox(
+                                  height: 20.0,
+                                  width: 20.0,
+                                  child: CircularProgressIndicator(
+                                    color: ColorTheme.redColor,
+                                  ),
+                                ),
                         )),
                     ButtonWidget(
                         radius: 100,
@@ -112,8 +186,10 @@ class _RunCodePageState extends State<RunCodePage> {
     );
   }
 
-  Future<dynamic> outputBottomsheetMethod(BuildContext context) {
+  Future<dynamic> outputBottomsheetMethod(
+      BuildContext context, CompileOutputModel model) {
     return showModalBottomSheet(
+        isDismissible: false,
         backgroundColor: Colors.transparent,
         context: context,
         builder: (builder) {
@@ -154,12 +230,25 @@ class _RunCodePageState extends State<RunCodePage> {
                         borderRadius: BorderRadius.circular(12.0),
                         child: SingleChildScrollView(
                           child: Container(
-                            child: const TextWidget(
-                                line: 50,
-                                title:
-                                    "Congress! Your programme Successfully compiled and output is equal to your target\n memory: 2kb and TimCongress! "),
+                            width: double.infinity,
                             padding: const EdgeInsets.all(8.0),
                             color: ColorTheme.sceandaryColor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                model.output!.isNotEmpty
+                                    ? TextWidget(line: 50, title: model.output)
+                                    : const SizedBox(),
+                                model.rntError!.isNotEmpty
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 2.0),
+                                        child: TextWidget(
+                                            line: 50, title: model.rntError),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -169,13 +258,13 @@ class _RunCodePageState extends State<RunCodePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         TextWidget(
-                          title: 'Memory: 12.4',
+                          title: 'Memory(mb):  ${model.memory.toString()}',
                           color: ColorTheme.redColor,
                         ),
                         TextWidget(
-                          title: 'Time: 2s',
+                          title: 'Time(sec): ${model.time.toString()}',
                           color: ColorTheme.successColor,
                         )
                       ],

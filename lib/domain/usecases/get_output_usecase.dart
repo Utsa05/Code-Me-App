@@ -1,6 +1,5 @@
 import 'package:code_me/data/models/compile_output_model.dart';
 import 'package:code_me/domain/entities/app_error.dart';
-import 'package:code_me/domain/entities/compile_parms.dart';
 import 'package:code_me/domain/entities/output_param.dart';
 import 'package:code_me/domain/repositories/compiler_repository.dart';
 import 'package:code_me/domain/usecases/usecase.dart';

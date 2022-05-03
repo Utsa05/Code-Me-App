@@ -1,8 +1,10 @@
 import 'package:code_me/common/constants/route_constants.dart';
+import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/pages/bottom_nav_page/bottom_nav_page.dart';
 import 'package:code_me/presentations/pages/home_page/home_page.dart';
 import 'package:code_me/presentations/pages/my_codes_page/my_codes_page.dart';
+import 'package:code_me/presentations/pages/run_code_page/run_code_page.dart';
 import 'package:code_me/presentations/pages/text_editor_page/text_editor_page.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,12 @@ class AppRoutes {
             builder: (context) => TextEditorPage(
                   isDirect: false,
                   languageItemEntity: arg as LanguageItemEntity,
+                ));
+
+      case RouteCons.complileRoute:
+        return MaterialPageRoute(
+            builder: (context) => RunCodePage(
+                  compileModel: arg as CompileRequestModel,
                 ));
 
       default:

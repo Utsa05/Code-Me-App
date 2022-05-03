@@ -26,7 +26,7 @@ class LanguageItemList {
           id: 4,
           title: 'Python 3',
           imageAssets: 'assets/icons/python.png',
-          language: "Python3",
+          language: "Python 3",
           type: 'python'),
       const LanguageItemEntity(
           id: 5,

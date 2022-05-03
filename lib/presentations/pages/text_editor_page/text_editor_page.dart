@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
 
+import 'package:code_me/common/constants/route_constants.dart';
 import 'package:code_me/common/constants/size_constants.dart';
 import 'package:code_me/data/core/code_help_item.dart';
+import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
-import 'package:code_me/presentations/pages/run_code_page/run_code_page.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
@@ -15,7 +16,6 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_highlight/themes/gradient-dark.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:highlight/languages/dart.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 import 'package:flutter_highlight/themes/lightfair.dart';
 import 'package:flutter_highlight/themes/default.dart';
@@ -43,45 +43,201 @@ class _TextEditorPageState extends State<TextEditorPage> {
   CodeController? _codeController;
   Map<String, TextStyle> themesource = monokaiSublimeTheme;
   var languageSource = cpp;
+  var languageType = "cpp";
   late var favLanguage;
+  late CompileRequestModel compileRequestModel =
+      CompileRequestModel(language: 'cpp', code: source, input: '', save: true);
   var source =
       '//c++ programme\n\n #include<bits/stdc++.h>\nusing namespace std;\n\n//your main function\nint main()\n{\ncout <<"Hello World!";	\n\nreturn 0;\n}\n';
 
   @override
   void initState() {
     super.initState();
+    print(widget.languageItemEntity.language);
+
     checkLanguageChoose(widget.languageItemEntity.id);
+  }
+
+  @override
+  void dispose() {
+    _codeController!.dispose();
+    super.dispose();
   }
 
   void checkLanguageChoose(int id) {
     if (id == 0) {
       _codeController = CodeController(
-        text: source,
-        language: languageSource,
-        theme: themesource,
-      );
+          text: source,
+          language: languageSource,
+          theme: themesource,
+          onChange: (value) {
+            setState(() {
+              source = value;
+              compileRequestModel = CompileRequestModel(
+                  language: languageType, code: source, input: "", save: true);
+            });
+          });
+
+      compileRequestModel = CompileRequestModel(
+          language: languageType, code: source, input: "", save: true);
     } else if (id == 100) {
       if (widget.languageItemEntity.language == 'Python') {
         favLanguage = python;
+        languageType = 'python';
+        source = widget.languageItemEntity.code!;
+
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Java') {
         favLanguage = java;
+        languageType = 'java';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Perl') {
         favLanguage = perl;
+        languageType = 'perl';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Php') {
         favLanguage = php;
+        languageType = 'php';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'C++') {
         favLanguage = cpp;
+        languageType = 'cpp';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Scala') {
         favLanguage = scala;
-      } else if (widget.languageItemEntity.language == 'Phthon 3') {
+        languageType = 'scala';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
+      } else if (widget.languageItemEntity.language == 'Python 3') {
         favLanguage = python;
+        languageType = 'python';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
+      } else {
+        _codeController = CodeController(
+          text: source,
+          language: favLanguage,
+          onChange: (val) {
+            setState(() {
+              source = val;
+              compileRequestModel = CompileRequestModel(
+                  language: languageType, code: source, input: "", save: true);
+            });
+          },
+          theme: themesource,
+        );
       }
 
       _codeController = CodeController(
-        text: widget.languageItemEntity.code,
+        text: source,
         language: favLanguage,
+        onChange: (val) {
+          setState(() {
+            source = val;
+            compileRequestModel = CompileRequestModel(
+                language: languageType, code: source, input: "", save: true);
+          });
+        },
         theme: themesource,
       );
+
+      compileRequestModel = CompileRequestModel(
+          language: languageType, code: source, input: "", save: true);
 
       setState(() {});
     } else {
@@ -93,36 +249,168 @@ class _TextEditorPageState extends State<TextEditorPage> {
     if (widget.languageItemEntity.id != 100) {
       if (language == "C++") {
         languageSource = cpp;
+        languageType = 'cpp';
         source =
             '//c++ programme\n\n #include<bits/stdc++.h>\nusing namespace std;\n\n//your main function\nint main()\n{\ncout <<"Hello World!";	\n\nreturn 0;\n}\n';
+
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (language == 'Python') {
         languageSource = python;
+        languageType = 'python';
         source = '//Python Programme\n\n print("Hello World!")';
+
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (language == 'Python 3') {
         languageSource = python;
+        languageType = 'python';
         source = '//Python 3 Programme\n\n print("Hello World!")';
+
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (language == 'Java') {
         languageSource = java;
+        languageType = 'java';
         source =
             '//Java Programme\n\n class Java\n{\n public static void main(string[] args){\n\nSystem.out.println("Hello World!")\n\n}\n}';
-      } else if (language == 'PHP') {
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
+      } else if (language == 'Php') {
         languageSource = php;
+        languageType = 'php';
         source = '//PHP Programme\n\n<?php\n\necho "Hello World!"\n\n?>';
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (language == 'Perl') {
         languageSource = perl;
+        languageType = 'perl';
         source =
             '//Perl Programme\n\n#!/usr/bin/perl\n\n# Modules used\nuse strict;\nuse warnings;\n\nprint("Hello World\n");';
+
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (language == 'Scala') {
         languageSource = scala;
+        languageType = 'scala';
         source =
             '//Scala Programme\n\nobject Geeks\n{\n// Main Method \ndef main(args: Array[String]) \n{\n println("Hello World!")\n}\n}';
+        _codeController = CodeController(
+            text: source,
+            language: languageSource,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
+      } else {
+        _codeController = CodeController(
+          text: source,
+          language: languageSource,
+          theme: themesource,
+          onChange: (val) {
+            setState(() {
+              source = val;
+              compileRequestModel = CompileRequestModel(
+                  language: languageType, code: source, input: "", save: true);
+            });
+          },
+        );
       }
 
       _codeController = CodeController(
         text: source,
         language: languageSource,
         theme: themesource,
+        onChange: (val) {
+          setState(() {
+            source = val;
+            compileRequestModel = CompileRequestModel(
+                language: languageType, code: source, input: "", save: true);
+          });
+        },
       );
+
+      compileRequestModel = CompileRequestModel(
+          language: languageType, code: source, input: "", save: true);
 
       setState(() {});
     }
@@ -139,30 +427,178 @@ class _TextEditorPageState extends State<TextEditorPage> {
       themesource = defaultTheme;
     }
     if (widget.languageItemEntity.id == 0) {
+      // _codeController = CodeController(
+      //     text: source, language: languageSource, theme: themesource);
       _codeController = CodeController(
-          text: source, language: languageSource, theme: themesource);
+          text: source,
+          language: languageSource,
+          theme: themesource,
+          onChange: (value) {
+            setState(() {
+              source = value;
+              compileRequestModel = CompileRequestModel(
+                  language: languageType, code: source, input: "", save: true);
+            });
+          });
     } else if (widget.languageItemEntity.id == 100) {
       if (widget.languageItemEntity.language == 'Python') {
         favLanguage = python;
+        languageType = 'python';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Java') {
         favLanguage = java;
+        languageType = 'java';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Perl') {
         favLanguage = perl;
+        languageType = 'perl';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Php') {
         favLanguage = php;
+        languageType = 'php';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'C++') {
         favLanguage = cpp;
+        languageType = 'cpp';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Scala') {
         favLanguage = scala;
+        languageType = 'scala';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       } else if (widget.languageItemEntity.language == 'Phthon 3') {
         favLanguage = python;
+        languageType = 'python';
+        source = widget.languageItemEntity.code!;
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
+      } else {
+        _codeController = CodeController(
+            text: source,
+            language: favLanguage,
+            theme: themesource,
+            onChange: (value) {
+              setState(() {
+                source = value;
+                compileRequestModel = CompileRequestModel(
+                    language: languageType,
+                    code: source,
+                    input: "",
+                    save: true);
+              });
+            });
       }
 
       _codeController = CodeController(
-        text: widget.languageItemEntity.code,
+        text: source,
         language: favLanguage,
         theme: themesource,
+        onChange: (val) {
+          setState(() {
+            source = val;
+            compileRequestModel = CompileRequestModel(
+                language: languageType, code: source, input: "", save: true);
+          });
+        },
       );
+
+      compileRequestModel = CompileRequestModel(
+          language: languageType, code: source, input: "", save: true);
     }
 
     setState(() {});
@@ -250,7 +686,9 @@ class _TextEditorPageState extends State<TextEditorPage> {
         Padding(
           padding: const EdgeInsets.only(right: 3.0),
           child: CircleBbttonWidget(
-            tap: () {},
+            tap: () {
+              print(source);
+            },
             iconSize: Sizes.dimen_24,
             child: const Icon(EvaIcons.heartOutline),
             color: ColorTheme.redColor,
@@ -363,7 +801,7 @@ class _TextEditorPageState extends State<TextEditorPage> {
                           //Do something
                           break;
                         case LanguageMenuItems.php:
-                          changeLanguageSource('PHP');
+                          changeLanguageSource('Php');
                           //Do something
                           break;
 
@@ -401,8 +839,8 @@ class _TextEditorPageState extends State<TextEditorPage> {
         width: 55.0,
         color: Colors.blueGrey,
         tap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const RunCodePage())));
+          Navigator.pushNamed(context, RouteCons.complileRoute,
+              arguments: compileRequestModel);
         },
         child: const TextWidget(
           color: ColorTheme.whiteColor,

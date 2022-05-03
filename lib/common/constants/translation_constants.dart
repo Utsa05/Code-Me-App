@@ -24,6 +24,7 @@ class TranslationConstants {
   static const String signIn = 'signIn';
   static const String wrongUsernamePassword = 'wrongUsernamePassword';
   static const String noNetwork = 'noNetwork';
+  static const String serverProblem = 'Server Problem';
   static const String logout = 'logout';
   static const String sessionDenied = 'sessionDenied';
   static const String enterTMDbUsername = 'enterTMDbUsername';
