@@ -6,7 +6,9 @@ import 'package:code_me/common/constants/size_constants.dart';
 import 'package:code_me/data/models/compile_output_model.dart';
 import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/data/models/compile_response_model.dart';
+import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/cubits/CompileRequestCubit/compilerequest_cubit.dart';
+import 'package:code_me/presentations/cubits/localCubit/local_cubit_cubit.dart';
 
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
@@ -33,6 +35,9 @@ class _RunCodePageState extends State<RunCodePage> {
     setCompilerInfo();
 
     print(language);
+    print(widget.compileModel.page);
+    print(widget.compileModel.code);
+    print(widget.compileModel.fileName);
     //print(input??"uu");
   }
 
@@ -114,7 +119,7 @@ class _RunCodePageState extends State<RunCodePage> {
                         color: ColorTheme.blueColor.withOpacity(0.2),
                         tap: () async {
                           var model = CompileRequestModel(
-                              language: language,
+                              language: language.toLowerCase(),
                               code: code,
                               input: inputController.text,
                               save: true);
@@ -122,9 +127,40 @@ class _RunCodePageState extends State<RunCodePage> {
                           if (model.language.isEmpty || model.code.isEmpty) {
                             print('field cannot be empty');
                           } else {
+                            // if (widget.compileModel.page == 'save') {
+                            //   LanguageItemEntity languageItemEntity =
+                            //       LanguageItemEntity(
+                            //           id: widget.compileModel.id!,
+                            //           imageAssets: '',
+                            //           title: '',
+                            //           language: '',
+                            //           type: '');
+                            // BlocProvider.of<LocalCubitCubit>(context)
+                            //     .deleteItem(languageItemEntity);
+                            //   DateTime currenttime = DateTime.now();
+                            //   var ms = currenttime.microsecond;
+                            //   LanguageItemEntity languageItem =
+                            //       LanguageItemEntity(
+                            //           id: ms,
+                            //           title: "updated",
+                            //           imageAssets: widget.compileModel.imagess!,
+                            //           language: widget.compileModel.language,
+                            //           code: code,
+                            //           page: 'save',
+                            //           type: widget.compileModel.language
+                            //               .toLowerCase());
+
+                            //   BlocProvider.of<LocalCubitCubit>(context)
+                            //       .insertItem(languageItem);
+                            //   BlocProvider.of<LocalCubitCubit>(context)
+                            //       .fetchLanguages('nosearch');
+                            // }
+
                             setState(() {
                               isLoading = true;
                             });
+
+                            //request to compile
                             BlocProvider.of<CompilerequestCubit>(context,
                                     listen: false)
                                 .initiateCompileRequest(model);
@@ -146,10 +182,15 @@ class _RunCodePageState extends State<RunCodePage> {
                                 isLoading = false;
                               });
 
-                              Timer(const Duration(seconds: 1), () {
-                                outputBottomsheetMethod(
-                                    context, state.compileOutputModel);
-                              });
+                              if (state.compileOutputModel.status ==
+                                  "SUCCESS") {
+                                Timer(const Duration(seconds: 1), () {
+                                  outputBottomsheetMethod(
+                                      context, state.compileOutputModel);
+                                });
+                              } else {
+                                print('no output');
+                              }
                             }
                           },
                           child: isLoading == false
@@ -236,17 +277,12 @@ class _RunCodePageState extends State<RunCodePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                model.output!.isNotEmpty
-                                    ? TextWidget(line: 50, title: model.output)
-                                    : const SizedBox(),
-                                model.rntError!.isNotEmpty
-                                    ? Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 2.0),
-                                        child: TextWidget(
-                                            line: 50, title: model.rntError),
-                                      )
-                                    : const SizedBox(),
+                                TextWidget(line: 50, title: model.output),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2.0),
+                                  child: TextWidget(
+                                      line: 50, title: model.rntError),
+                                )
                               ],
                             ),
                           ),

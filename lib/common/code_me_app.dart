@@ -5,6 +5,7 @@ import 'package:code_me/di/di.dart';
 import 'package:code_me/presentations/cubits/CompileRequestCubit/compilerequest_cubit.dart';
 import 'package:code_me/presentations/cubits/OutputCubit/output_cubit.dart';
 import 'package:code_me/presentations/cubits/loadingCubit/loading_cubit.dart';
+import 'package:code_me/presentations/cubits/localCubit/local_cubit_cubit.dart';
 
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class CodeMeApp extends StatefulWidget {
 class _CodeMeAppState extends State<CodeMeApp> {
   late LoadingCubit _loadingCubit;
   late CompilerequestCubit _compilerequestCubit;
+  late LocalCubitCubit _localCubitCubit;
   late OutputCubit _outputCubit;
   // This widget is the root of your application.
 
@@ -28,6 +30,7 @@ class _CodeMeAppState extends State<CodeMeApp> {
     _compilerequestCubit = instance<CompilerequestCubit>();
     _loadingCubit = instance<LoadingCubit>();
     _outputCubit = instance<OutputCubit>();
+    _localCubitCubit = instance<LocalCubitCubit>();
     super.initState();
   }
 
@@ -36,6 +39,7 @@ class _CodeMeAppState extends State<CodeMeApp> {
     _compilerequestCubit.close();
     _loadingCubit.close();
     _outputCubit.close();
+    _localCubitCubit.close();
     super.dispose();
   }
 
@@ -47,6 +51,7 @@ class _CodeMeAppState extends State<CodeMeApp> {
         BlocProvider<LoadingCubit>.value(value: _loadingCubit),
         BlocProvider<CompilerequestCubit>.value(value: _compilerequestCubit),
         BlocProvider<OutputCubit>.value(value: _outputCubit),
+        BlocProvider<LocalCubitCubit>.value(value: _localCubitCubit),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -68,7 +73,7 @@ class _CodeMeAppState extends State<CodeMeApp> {
               ),
             ),
             enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: ColorTheme.whiteColor)),
+                borderSide: BorderSide(color: ColorTheme.primaryColor)),
           ),
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: ColorTheme.redColor),

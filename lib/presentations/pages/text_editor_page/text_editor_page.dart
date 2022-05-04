@@ -5,6 +5,7 @@ import 'package:code_me/common/constants/size_constants.dart';
 import 'package:code_me/data/core/code_help_item.dart';
 import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
+import 'package:code_me/presentations/cubits/localCubit/local_cubit_cubit.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
@@ -12,6 +13,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_highlight/themes/gradient-dark.dart';
 
@@ -45,6 +47,7 @@ class _TextEditorPageState extends State<TextEditorPage> {
   var languageSource = cpp;
   var languageType = "cpp";
   late var favLanguage;
+  final TextEditingController fileController = TextEditingController();
   late CompileRequestModel compileRequestModel =
       CompileRequestModel(language: 'cpp', code: source, input: '', save: true);
   var source =
@@ -53,7 +56,7 @@ class _TextEditorPageState extends State<TextEditorPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.languageItemEntity.language);
+    print(widget.languageItemEntity.id);
 
     checkLanguageChoose(widget.languageItemEntity.id);
   }
@@ -686,8 +689,59 @@ class _TextEditorPageState extends State<TextEditorPage> {
         Padding(
           padding: const EdgeInsets.only(right: 3.0),
           child: CircleBbttonWidget(
-            tap: () {
-              print(source);
+            tap: () async {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                      child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: fileController,
+                            decoration: const InputDecoration(
+                                hintText: 'File Name?',
+                                border: InputBorder.none),
+                          ),
+                          ButtonWidget(
+                            tap: () async {
+                              if (fileController.text.isNotEmpty) {
+                                DateTime currenttime = DateTime.now();
+                                var ms = currenttime.microsecond;
+                                LanguageItemEntity languageItemEntity =
+                                    LanguageItemEntity(
+                                        id: ms,
+                                        title: fileController.text,
+                                        imageAssets: "image assets",
+                                        language: compileRequestModel.language
+                                            .toUpperCase(),
+                                        code: compileRequestModel.code,
+                                        type: languageType);
+
+                                BlocProvider.of<LocalCubitCubit>(context)
+                                    .insertItem(languageItemEntity);
+                                Navigator.of(context).pop();
+                              }
+                            },
+                            child: const TextWidget(
+                              title: 'Save',
+                            ),
+                            color: ColorTheme.primaryColor,
+                          )
+                        ],
+                      ),
+                    ),
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    height: 115.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                    ),
+                    //Contents here
+                  ));
+                },
+              );
             },
             iconSize: Sizes.dimen_24,
             child: const Icon(EvaIcons.heartOutline),

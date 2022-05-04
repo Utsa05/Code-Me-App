@@ -3,6 +3,7 @@
 List<dynamic> codehelpItemList = [
   {"name": "Clr", "value": ""},
   {"name": "Cpy", "value": ""},
+  {"name": ";", "value": ";"},
   {"name": "( )", "value": "( )"},
   {"name": "{ }", "value": "{ }"},
   {"name": "' '", "value": "' '"},

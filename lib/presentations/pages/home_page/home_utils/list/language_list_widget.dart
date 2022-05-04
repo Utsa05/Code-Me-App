@@ -18,6 +18,7 @@ class LanguageListWidget extends StatelessWidget {
         itemCount: languageList.length,
         itemBuilder: (context, index) {
           var item = languageList[index];
+
           return LanguageListItemWidget(item: item);
         });
   }

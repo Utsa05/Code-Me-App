@@ -2,6 +2,9 @@ import 'package:code_me/common/constants/pm_constants.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../cubits/localCubit/local_cubit_cubit.dart';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({
@@ -17,6 +20,7 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
+  LocalCubitCubit get localcubt => BlocProvider.of<LocalCubitCubit>(context);
   bool isWriting = false;
   @override
   Widget build(BuildContext context) {
@@ -26,9 +30,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           controller: widget._searchController,
           onChanged: (value) {
             if (value.isNotEmpty) {
+              localcubt.fetchLanguages(value.toLowerCase());
               isWriting = true;
             } else {
               isWriting = false;
+              localcubt.fetchLanguages('nosearch');
             }
 
             setState(() {});
@@ -55,6 +61,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   splashColor: ColorTheme.blueColor,
                   tap: () {
                     widget._searchController.clear();
+                    localcubt.fetchLanguages('nosearch');
                     if (widget._searchController.text.isNotEmpty) {
                       isWriting = true;
                     } else {

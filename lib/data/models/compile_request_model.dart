@@ -11,17 +11,24 @@ String compileRequestModelToJson(CompileRequestModel data) =>
     json.encode(data.toJson());
 
 class CompileRequestModel {
-  CompileRequestModel({
-    required this.language,
-    required this.code,
-    required this.input,
-    required this.save,
-  });
+  CompileRequestModel(
+      {required this.language,
+      required this.code,
+      required this.input,
+      required this.save,
+      this.imagess,
+      this.fileName,
+      this.id,
+      this.page});
 
   String language;
   String code;
   String input;
   bool save;
+  String? imagess;
+  String? fileName;
+  int? id;
+  String? page;
 
   factory CompileRequestModel.fromJson(Map<String, dynamic> json) =>
       CompileRequestModel(

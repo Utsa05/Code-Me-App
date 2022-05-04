@@ -5,6 +5,7 @@ class TranslationConstants {
   static const String language = 'language';
   static const String feedback = 'feedback';
   static const String retry = 'retry';
+  static const String lacaldbError = 'LocalDB Error';
   static const String somethingWentWrong = 'somethingWentWrong';
   static const String checkNetwork = 'checkNetwork';
   static const String about = 'about';

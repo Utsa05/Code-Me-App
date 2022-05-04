@@ -2,7 +2,7 @@ import 'package:code_me/data/models/nav_item_model.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/pages/home_page/home_page.dart';
 import 'package:code_me/presentations/pages/my_codes_page/my_codes_page.dart';
-import 'package:code_me/presentations/pages/text_editor_page/text_editor_page.dart';
+import 'package:code_me/presentations/pages/text_editor_page/my_text_editor_page.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +18,25 @@ class _BottomNavPageState extends State<BottomNavPage> {
   int selectBtn = 1;
   var pages = [
     const HomePage(),
-    const TextEditorPage(
-      isDirect: true,
+    const MyTextEditorPage(
       languageItemEntity: LanguageItemEntity(
           id: 0,
           title: "title",
           imageAssets: "imageAssets",
           language: "language",
-          type: "type"),
+          type: "type",
+          page: 'nav',
+          code: 'code'),
     ),
+    // const TextEditorPage(
+    //   isDirect: true,
+    // languageItemEntity: LanguageItemEntity(
+    //     id: 0,
+    //     title: "title",
+    //     imageAssets: "imageAssets",
+    //     language: "language",
+    //     type: "type"),
+    // ),
     const MyCodesPage()
   ];
   @override
