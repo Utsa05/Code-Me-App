@@ -3,13 +3,12 @@
 import 'dart:async';
 
 import 'package:code_me/common/constants/size_constants.dart';
+import 'package:code_me/common/copy.dart';
 import 'package:code_me/data/models/compile_output_model.dart';
 import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/data/models/compile_response_model.dart';
-import 'package:code_me/domain/entities/language_item_entity.dart';
 import 'package:code_me/presentations/cubits/CompileRequestCubit/compilerequest_cubit.dart';
-import 'package:code_me/presentations/cubits/localCubit/local_cubit_cubit.dart';
-
+import 'package:share_plus/share_plus.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';
 import 'package:code_me/presentations/widgets/button_widget.dart';
 import 'package:code_me/presentations/widgets/text_widget.dart';
@@ -106,7 +105,9 @@ class _RunCodePageState extends State<RunCodePage> {
                         height: 55.0,
                         elevaiton: 0.0,
                         color: ColorTheme.whiteColor.withOpacity(0.1),
-                        tap: () {},
+                        tap: () {
+                          copyText(widget.compileModel.code);
+                        },
                         child: Icon(
                           Icons.copy_sharp,
                           color: ColorTheme.whiteColor.withOpacity(0.6),
@@ -212,7 +213,14 @@ class _RunCodePageState extends State<RunCodePage> {
                         height: 55.0,
                         elevaiton: 0.0,
                         color: ColorTheme.whiteColor.withOpacity(0.1),
-                        tap: () {},
+                        tap: () {
+                          Share.share(
+                              'Code\n' +
+                                  widget.compileModel.code +
+                                  '\n\nInput\n' +
+                                  widget.compileModel.input,
+                              subject: 'Code Me App\nShare Your Code');
+                        },
                         child: Icon(
                           Icons.share_outlined,
                           color: ColorTheme.whiteColor.withOpacity(0.6),

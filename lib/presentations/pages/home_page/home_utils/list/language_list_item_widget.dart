@@ -1,9 +1,6 @@
 import 'package:code_me/common/constants/pm_constants.dart';
-import 'package:code_me/common/constants/route_constants.dart';
 import 'package:code_me/common/constants/size_constants.dart';
-import 'package:code_me/data/datasources/local_datasource/local_datasource.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
-import 'package:code_me/presentations/cubits/loadingCubit/loading_cubit.dart';
 import 'package:code_me/presentations/cubits/localCubit/local_cubit_cubit.dart';
 import 'package:code_me/presentations/pages/text_editor_page/my_text_editor_page.dart';
 import 'package:code_me/presentations/themes/color_theme.dart';

@@ -3,6 +3,7 @@
 import 'package:code_me/common/constants/code_constants.dart';
 import 'package:code_me/common/constants/route_constants.dart';
 import 'package:code_me/common/constants/size_constants.dart';
+import 'package:code_me/common/copy.dart';
 import 'package:code_me/data/core/code_help_item.dart';
 import 'package:code_me/data/models/compile_request_model.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
@@ -256,6 +257,9 @@ class _MyTextEditorPageState extends State<MyTextEditorPage> {
                               setState(() {
                                 _codeController!.text = "";
                               });
+                            } else if (codehelpItemList[index]['name'] ==
+                                "Cpy") {
+                              copyText(compileRequestModel.code);
                             } else {
                               insert(codehelpItemList[index]['value']);
                             }

@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:code_me/common/code_me_app.dart';
 import 'package:code_me/domain/entities/app_error.dart';
 import 'package:code_me/domain/entities/language_item_entity.dart';
-import 'package:code_me/domain/entities/local_db_param.dart';
 import 'package:code_me/domain/entities/no_parms.dart';
 import 'package:code_me/domain/usecases/get_languages_usecase.dart';
 import 'package:dartz/dartz.dart';
@@ -19,14 +18,6 @@ void main() async {
   //dynamic id=0;
   // CompileRequestModel lanmodel = CompileRequestModel(
   //     language: 'python', code: 'print("Hello World!")', input: '', save: true);
-
-  LanguageItemEntity entity = const LanguageItemEntity(
-      id: 12112,
-      title: 'my title',
-      imageAssets: 'assets',
-      language: 'lange',
-      type: 'type',
-      code: 'code');
 
   GetLanguageUsecase getLanguageUsecase = getit.instance<GetLanguageUsecase>();
   Either<AppError, List<LanguageItemEntity>> eitherResponse =
