@@ -1,7 +1,7 @@
 # Code Me App
-In this app you doing code with 10+ most popular language
+In this app, you doing code with 10+ most popular language
 
-A new Flutter project.
+State Management: Flutter Cubit (Block)
 
 
 
